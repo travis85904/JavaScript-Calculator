@@ -81,15 +81,17 @@ const negativeButton = document.querySelector('[data-negative]')
 const calculator = new Calculator(previousOperandText, currentOperandText);
 
 document.addEventListener('keydown', (e) => {
+    console.log(e.key);
     if (e.key >= 0 && e.key < 10) {
-        calculator.appendNumber(e.key);
+        calculator.appendNumber(e.key.toString());
         calculator.updateDisplay();
-    }
-    if (e.key === '*' || e.key === '/' || e.key === '-' || e.key === '+') {
-        calculator.chooseOperation(e.key);
+    }else if (e.key.toString() === '*' || e.key === '/' || e.key === '-' || e.key === '+') {
+        calculator.chooseOperation(e.key.toString());
         calculator.updateDisplay();
-    }
-    if (e.key === 'Enter') {
+    }else if (e.key.toString() === 'Enter') {
+        //prevents HTML from activate the last button that was clicked with the mouse
+        //which was causing the Clear button to unexpectedly activate after multiple operations.
+        e.preventDefault();
         calculator.calculate();
     }
 });
