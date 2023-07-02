@@ -80,17 +80,30 @@ const negativeButton = document.querySelector('[data-negative]')
 
 const calculator = new Calculator(previousOperandText, currentOperandText);
 
+document.addEventListener('keydown', (e) => {
+    if (e.key >= 0 && e.key < 10) {
+        calculator.appendNumber(e.key);
+        calculator.updateDisplay();
+    }
+    if (e.key === '*' || e.key === '/' || e.key === '-' || e.key === '+') {
+        calculator.chooseOperation(e.key);
+        calculator.updateDisplay();
+    }
+    if (e.key === 'Enter') {
+        calculator.calculate();
+    }
+});
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
         calculator.appendNumber(button.innerText);
         calculator.updateDisplay();
-    })
+    });
 });
 operationButtons.forEach(button => {
     button.addEventListener('click', () => {
         calculator.chooseOperation(button.innerText);
         calculator.updateDisplay();
-    })
+    });
 });
 clearButton.addEventListener('click', () => {
     calculator.clear();
@@ -102,8 +115,9 @@ deleteButton.addEventListener('click', () => {
 });
 equalsButton.addEventListener('click', () => {
     calculator.calculate();
-})
+});
 negativeButton.addEventListener('click', () => {
     calculator.invertNumber();
     calculator.updateDisplay();
-})
+});
+
